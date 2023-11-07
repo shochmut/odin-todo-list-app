@@ -1,0 +1,30 @@
+{
+  "name": "odin-todo-list-app",
+  "version": "1.0.0",
+  "description": "Part of the Odin Project JS Course. This is a Todo List application built using HTML, CSS, JS, Webpack.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shochmut/odin-todo-list-app.git"
+  },
+  "keywords": [],
+  "author": "Skyler Hochmuth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shochmut/odin-todo-list-app/issues"
+  },
+  "homepage": "https://github.com/shochmut/odin-todo-list-app#readme",
+  "devDependencies": {
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  }
+}
