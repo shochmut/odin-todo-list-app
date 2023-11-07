@@ -1,10 +1,11 @@
-function component() {
-    const element = document.createElement('div');
-  
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  
+import createHeader from './Header/Header.js'
+
+function loadWebsite() {
+    const content = document.getElementById('content');
+    content.appendChild(createHeader());
+
+
     return element;
   }
   
-  document.body.appendChild(component());
+loadWebsite()

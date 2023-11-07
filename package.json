@@ -4,7 +4,7 @@
   "description": "Part of the Odin Project JS Course. This is a Todo List application built using HTML, CSS, JS, Webpack.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "test",
     "build": "webpack",
     "watch": "webpack --watch"
   },
@@ -25,6 +25,12 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "date-fns": "^2.30.0"
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.17",
+    "css-loader": "^6.8.1",
+    "date-fns": "^2.30.0",
+    "style-loader": "^3.3.3"
   }
 }
