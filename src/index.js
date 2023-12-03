@@ -1,13 +1,10 @@
 import './styles.css';
-import createHeader from './Header/Header.js'
-
+import {renderWebsite} from './app.js'
 
 function loadWebsite() {
     const content = document.getElementById('content');
-    content.appendChild(createHeader());
+    content.appendChild(renderWebsite.createHeader());
 
-
-    return element;
   }
   
 loadWebsite()

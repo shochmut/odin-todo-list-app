@@ -1,6 +1,9 @@
 .header-container {
     height: 100px;
     background-color: red;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
 }
 
 .header-icon {
@@ -10,4 +13,6 @@
 #content {
     height: 100%;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
