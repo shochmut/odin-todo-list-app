@@ -1,13 +1,61 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Assets/fonts/Roboto-Regular.ttf') format('ttf'),
+         url('./Assets/fonts/Roboto-Bold.ttf') format('ttf');
+    font-style: normal;
+    font-weight: 1000;
+}
+
+:root {
+    --darkest-gray: #212529;
+    --darker-gray: #343A40;
+    --dark-gray: #495057;
+    --gray: #6C757D;
+    --light-gray: #ADB5BD;
+    --lighter-gray: #CED4DA;
+    --blue: #0096C7;
+    --aqua: #52b788;
+    --pink: #e5989b;
+}
+* {
+    font-family: 'Roboto';
+}
+
 .header-container {
     height: 100px;
-    background-color: red;
+    background-color: var(--darkest-gray);
     display: flex;
     align-items: center;
     padding-left: 30px;
+    grid-area: header;
 }
 
 .header-icon {
     height: 50px;
+}
+
+.close-window-icon, .close-window-button {
+    height: 50px;
+}
+
+.sidebar-container {
+    background-color: var(--gray);
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.workspace-container {
+    background-color: var(--lighter-gray);
+    grid-area: workspace;
+    padding: 20px;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 #content {
@@ -15,4 +63,77 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-rows: 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "header header header header"
+        "sidebar workspace workspace workspace";        
 }
+
+.add-project-button {
+    display: flex;
+    height: 40px;
+    padding: 0;
+    margin: 10px 10px 10px 10px;
+    background: #009578;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    overflow: hidden;
+    font-family: "Quicksand", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    align-content: center;
+}
+.add-project-button:hover {
+    background: #008168;
+}
+.add-project-button:active {
+    background: #006e58;
+}
+.button-text,
+.button-icon {
+    display: inline-flex;
+    color: #fff;
+    height: 100%;
+}
+.button-icon {
+    height: 20px;
+}
+
+.add-project-form {
+    position: absolute;
+    visibility: hidden;
+    left: 10%;
+    top: 25%;
+    height: 50%;
+    max-height: 80rem;
+    width: 80%;
+    max-width: 80rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2rem 4rem rgba(0,0,0,0.6);
+    background-color: white;
+    display: flex;
+}
+.add-project-form.activated {
+    visibility: visible;
+    display: inline-block;
+} 
+
+.add-project-form-header {
+    display:flex;
+    justify-content: space-between;
+    background-color: var(--dark-gray);
+    width: 98%;
+    margin: 0;
+    padding-left: 20px;
+    overflow: hidden;
+}
+
+
+
+
