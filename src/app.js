@@ -3,7 +3,7 @@ import notebookEditIcon from './Assets/notebook-edit.svg'
 import plusCircle from './Assets/plus-circle.svg'
 import windowCloseIcon from './Assets/window-close.svg'
 
-const todoLogic = (function() {
+export const todoLogic = (function() {
     //module containing all application logic
     let todos = [];
     let projects = [];
@@ -76,6 +76,7 @@ export const renderWebsite = (function() {
         //add new project button
         const addProjectButton = document.createElement('button');
         addProjectButton.classList.add('add-project-button');
+        addProjectButton.id = 'addProjectButton';
         const buttonText = document.createElement('span');
         buttonText.classList.add('add-project-button', 'button-text');
         buttonText.innerHTML = 'Add Project';
@@ -116,6 +117,7 @@ export const renderWebsite = (function() {
 
     function createAddProjectForm() {
         const form = document.createElement('form');
+        form.id = "createProjectForm";
         form.classList.add('add-project-form');
         const header = document.createElement('div');
         header.classList.add('add-project-form-header');
@@ -133,13 +135,14 @@ export const renderWebsite = (function() {
         header.appendChild(windowCloseButton);
         const titleInput = document.createElement('input');
         titleInput.classList.add('add-project-form-title-input');
+        titleInput.id = 'project'
         titleInput.type = 'text';
         titleInput.placeholder = 'Project Title'
         form.appendChild(titleInput);
         const submitButton = document.createElement('input');
         submitButton.classList.add('create-project-submit')
-        submitButton.type = 'submit'
-        submitButton.value = 'Create Project'
+        submitButton.type = 'submit';
+        submitButton.value = "Create Project";
         form.appendChild(submitButton);
 
 
