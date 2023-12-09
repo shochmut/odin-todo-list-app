@@ -49,7 +49,10 @@
 .workspace-container {
     background-color: var(--lighter-gray);
     grid-area: workspace;
-    padding: 20px;
+    padding: 30px 50px 30px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 html, body {
@@ -81,12 +84,9 @@ html, body {
     outline: none;
     border-radius: 5px;
     overflow: hidden;
-    font-family: "Quicksand", sans-serif;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 15px;
     cursor: pointer;
     width: 100%;
-    align-content: center;
 }
 .add-project-button:hover {
     background: #008168;
@@ -96,12 +96,15 @@ html, body {
 }
 .button-text,
 .button-icon {
-    display: inline-flex;
-    color: #fff;
     height: 100%;
 }
+.button-text {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
 .button-icon {
-    height: 20px;
+    height: 10px;
 }
 
 .add-project-form {
@@ -163,3 +166,114 @@ html, body {
     background-color: var(--c);
     color: #fff;
   }
+
+
+.todo-container {
+    display: grid;
+    background-color: var(--gray);
+    padding: 5px 10px 5px 10px;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 1fr;
+    grid-template-columns: 40px 1fr 1fr 1fr 1fr 40px 40px;
+    grid-template-areas:
+        "done priority title duedate description edit delete";
+    justify-items: center;
+    align-items: center;        
+}
+
+.todo-priority {
+    grid-area: priority;
+}
+
+.todo-title {
+    grid-area: title;
+}
+
+.todo-duedate {
+    grid-area: duedate;
+}
+
+.todo-description {
+    grid-area: description;
+}
+
+.todo-edit {
+    grid-area: edit;
+    height: 30px;
+}
+.todo-delete {
+    grid-area: delete;
+    height: 30px;
+}
+.todo-edit:hover, .todo-delete:hover {
+    opacity: 0.5;
+}
+
+.todo-done {
+    grid-area: done;
+    height: 20px;
+    width: 20px;
+}
+
+#add-todo-button {
+    height: 80px;
+    width: 80px;
+}
+#add-todo-button:hover {
+    opacity: 0.5;
+}
+
+#create-todo-form {
+    position: absolute;
+    visibility: hidden;
+    left: 10%;
+    top: 25%;
+    height: 50%;
+    max-height: 80rem;
+    width: 80%;
+    max-width: 80rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2rem 4rem rgba(0,0,0,0.6);
+    background-color: white;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "header header"
+        "todo-title todo-title"
+        "todo-description todo-description"
+        "todo-description todo-description"
+        "todo-duedate todo-duedate"
+        "todo-submit todo-submit";
+}
+#create-todo-form-header {
+    grid-area: header;
+}
+.create-todo-title {
+    grid-area: todo-title;
+}
+#create-todo-submit {
+    grid-area: todo-submit;
+}
+.create-todo-duedate-label {
+    grid-area: todo-duedate;
+}
+.create-todo-description {
+    grid-area: todo-description;
+}
+#create-todo-form.activated {
+    visibility: visible;
+    /* display: inline-block;    */
+} 
+
+#create-todo-form-header {
+    display:flex;
+    justify-content: space-between;
+    background-color: var(--blue);
+    width: 98%;
+    margin: 0;
+    padding-left: 20px;
+    overflow: hidden;
+}
