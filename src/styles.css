@@ -168,7 +168,7 @@ html, body {
   }
 
 
-.todo-container {
+.todo {
     display: grid;
     background-color: var(--gray);
     padding: 5px 10px 5px 10px;
@@ -180,6 +180,11 @@ html, body {
         "done priority title duedate description edit delete";
     justify-items: center;
     align-items: center;        
+}
+
+.todo-container {
+    display: flex;
+    flex-direction: column;       
 }
 
 .todo-priority {

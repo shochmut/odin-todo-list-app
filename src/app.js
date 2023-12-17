@@ -128,12 +128,10 @@ export const renderWebsite = (function() {
         const workspace = document.createElement('div');
         workspace.classList.add('workspace-container');
 
-        const title = document.createElement('h1');
-        title.classList.add('workspace-item');
-        title.innerHTML = 'Test Workspace';
-        workspace.appendChild(title);
-
-        renderTodos(workspace);
+        const TodoContainer = document.createElement('div');
+        TodoContainer.classList.add('todo-container');
+        workspace.appendChild(TodoContainer);
+        renderTodos(TodoContainer);
 
         // Render The Add Todo Button
         const addTodoButton = document.createElement('input');
@@ -146,15 +144,15 @@ export const renderWebsite = (function() {
         return workspace;
     }
 
-    function renderTodos(workspace) {
-        workspace.replaceChildren();
-        todoLogic.todos.forEach(function (item) {workspace.appendChild(createTodoDisplay(item))});
+    function renderTodos(TodoContainer) {
+        TodoContainer.replaceChildren();
+        todoLogic.todos.forEach(function (item) {TodoContainer.appendChild(createTodoDisplay(item))});
     }
 
     function createTodoDisplay(item) {
-        const TodoContainer = document.createElement('div');
-        TodoContainer.classList.add('todo-container');
-        
+        const Todo = document.createElement('div');
+        Todo.classList.add('todo');
+
         const title = document.createElement('p');
         title.classList.add('todo-title');
         title.innerHTML = item.title;
@@ -191,15 +189,15 @@ export const renderWebsite = (function() {
         deleteButton.type = 'image';
         deleteButton.src = trashCanIcon;
 
-        TodoContainer.appendChild(title);
-        TodoContainer.appendChild(description);
-        TodoContainer.appendChild(dueDate);
-        TodoContainer.appendChild(priority);
-        TodoContainer.appendChild(editButton);
-        TodoContainer.appendChild(deleteButton);
-        TodoContainer.appendChild(done);
+        Todo.appendChild(title);
+        Todo.appendChild(description);
+        Todo.appendChild(dueDate);
+        Todo.appendChild(priority);
+        Todo.appendChild(editButton);
+        Todo.appendChild(deleteButton);
+        Todo.appendChild(done);
 
-        return TodoContainer;
+        return Todo;
     }
 
     function createAddProjectForm() {
@@ -296,7 +294,7 @@ export const renderWebsite = (function() {
         return form
     }
 
-    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, createAddTodoForm}
+    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, renderTodos, createAddTodoForm}
     
 })();
 

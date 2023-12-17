@@ -18,6 +18,8 @@ function loadWebsite() {
     const addTodoButton = document.querySelector('#add-todo-button');
     const addTodoForm = document.getElementById('create-todo-form');
     const closeTodoWindowButton = document.querySelector('#create-todo-form .close-window-button');
+    const TodoContainer = document.querySelector('.todo-container');
+
 
     // Toggle Add Project Form Visibility
     openAddProjectForm.addEventListener('click', () => {
@@ -35,6 +37,7 @@ function loadWebsite() {
       e.preventDefault();
       todoLogic.createProject(project.value);
       project.value = ''; // reset form
+      addProjectForm.classList.toggle('activated'); //close project form
       renderWebsite.renderProjects(document.querySelector('.project-container'));
     })
 
@@ -49,12 +52,20 @@ function loadWebsite() {
       addTodoForm.classList.toggle('activated');
     })
 
+    // Submit New Todo 
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = new FormData(addTodoForm);
-      console.log(data)
-      todoLogic.createTodo(data.title, data.description, data.duedate);
-      console.log(todoLogic.todos)
+      const form = e.target.elements;
+
+      const title = form.title.value;
+      const description = form.description.value;
+      const dueDate = form.duedate.value;
+
+      todoLogic.createTodo(title, description, dueDate, undefined , undefined , undefined , undefined,  todoLogic.getCurrentProject());
+      e.target.reset(); // reset form fields
+      addTodoForm.classList.toggle('activated'); // close form
+
+      renderWebsite.renderTodos(TodoContainer);
     })
   }
   
