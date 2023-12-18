@@ -43,7 +43,13 @@
     grid-area: sidebar;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0 20px 0;
+    overflow: hidden;
+}
+
+.sidebar-item {
+    justify-self: center;
+    align-self: center;
 }
 
 .workspace-container {
@@ -72,6 +78,26 @@ html, body {
     grid-template-areas:
         "header header header header"
         "sidebar workspace workspace workspace";        
+}
+
+.project-title {
+    list-style-type: none;
+    margin: 0 0 10px 0;
+    padding: 5px 0 5px 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.project-title:hover {
+    background-color: var(--dark-gray);
+    cursor: pointer;
+
+}
+
+.project-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
 .add-project-button {
