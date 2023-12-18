@@ -91,7 +91,10 @@ html, body {
 .project-title:hover {
     background-color: var(--dark-gray);
     cursor: pointer;
+}
 
+.project-title.activated {
+    background-color: var(--light-gray);
 }
 
 .project-container {

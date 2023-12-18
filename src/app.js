@@ -30,7 +30,7 @@ export const todoLogic = (function() {
     function createProject(title, todoList) {
         const newProject = {
             title: title,
-            todoList: todoList,
+            todoList: todoList,   
         }
         projects.push(newProject);
         return {newProject, projects};
@@ -58,6 +58,7 @@ todoLogic.createTodo('Example Todo', 'This is my first todo item', '12/1/2023', 
 
 export const renderWebsite = (function() {
     //module containing all user interface generation logic
+
     function createHeader() {
         const header = document.createElement('div');
         header.classList.add('header-container')
@@ -121,6 +122,13 @@ export const renderWebsite = (function() {
         const title = document.createElement('li');
         title.classList.add('project-title');
         title.innerHTML = project.title;
+        title.addEventListener('click', function() {
+            renderWebsite.resetActiveProjects(document.querySelectorAll('.project-title'));
+            title.classList.toggle('activated');
+            todoLogic.setProject(title.innerHTML);
+            console.log(todoLogic.getCurrentProject());
+        })
+
         return title
     }
 
@@ -279,13 +287,6 @@ export const renderWebsite = (function() {
         dueDateContainer.appendChild(dueDate);
         form.appendChild(dueDateContainer);
 
-
-
-
-
-
-
-
         //     priority: priority,
         //     notes: notes,
         //     checklist: checklist,
@@ -294,7 +295,14 @@ export const renderWebsite = (function() {
         return form
     }
 
-    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, renderTodos, createAddTodoForm}
+    function resetActiveProjects(allProjectElements) {
+        // Function to reset all sidebar projects to not be highlighted
+        allProjectElements.forEach(function(item) {
+            item.classList.remove('activated');
+        })
+    }
+
+    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, renderTodos, createAddTodoForm, resetActiveProjects}
     
 })();
 

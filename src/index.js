@@ -19,6 +19,7 @@ function loadWebsite() {
     const addTodoForm = document.getElementById('create-todo-form');
     const closeTodoWindowButton = document.querySelector('#create-todo-form .close-window-button');
     const TodoContainer = document.querySelector('.todo-container');
+    const allProjectElements = document.querySelectorAll('.project-title');
 
 
     // Toggle Add Project Form Visibility
@@ -67,6 +68,16 @@ function loadWebsite() {
 
       renderWebsite.renderTodos(TodoContainer);
     })
+
+    // Select Project Listener
+    allProjectElements.forEach(function(item) {
+      item.addEventListener('click', function() {
+        console.log('test')
+        renderWebsite.resetActiveProjects(allProjectElements);
+        item.classList.toggle('activated');
+      })
+    })
+
   }
   
 loadWebsite()
