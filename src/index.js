@@ -10,6 +10,7 @@ function loadWebsite() {
     content.appendChild(renderWebsite.createWorkspace());
     content.appendChild(renderWebsite.createAddProjectForm());
     content.appendChild(renderWebsite.createAddTodoForm());
+    content.appendChild(renderWebsite.createEditForm());
 
     // Set of DOM Selectors
     const openAddProjectForm = document.getElementById('addProjectButton');
@@ -19,7 +20,8 @@ function loadWebsite() {
     const addTodoForm = document.getElementById('create-todo-form');
     const closeTodoWindowButton = document.querySelector('#create-todo-form .close-window-button');
     const TodoContainer = document.querySelector('.todo-container');
-    const allProjectElements = document.querySelectorAll('.project-title');
+    const editTodoForm = document.querySelector('#edit-todo-form');
+    const closeEditButton = document.querySelector('#edit-todo-form > .close-window-button');
 
 
     // Toggle Add Project Form Visibility
@@ -29,17 +31,30 @@ function loadWebsite() {
 
     // Close Add Project Form
     closeWindowButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        addProjectForm.classList.toggle('activated');
+      })
+
+    // Close Edit Todo Form
+    closeEditButton.addEventListener('click', (e) => {
       e.preventDefault();
-      addProjectForm.classList.toggle('activated');
-    })
+      editTodoForm.classList.toggle('activated')
+    } )
+    
   
     // Add Project Form Submission and Refresh Sidebar
     addProjectForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      todoLogic.createProject(project.value);
-      project.value = ''; // reset form
-      addProjectForm.classList.toggle('activated'); //close project form
-      renderWebsite.renderProjects(document.querySelector('.project-container'));
+      document.querySelector('.add-project-form-title-input').classList.remove('invalid');
+      if (todoLogic.checkIfProjectExists(project.value) === true) {
+        console.log('error project exists')
+        document.querySelector('.add-project-form-title-input').classList.add('invalid');
+      } else {
+        todoLogic.createProject(project.value);
+        project.value = ''; // reset form
+        addProjectForm.classList.toggle('activated'); //close project form
+        renderWebsite.renderProjects(document.querySelector('.project-container'));
+      }
     })
 
     // Add To Do Event Handler
@@ -69,14 +84,7 @@ function loadWebsite() {
       renderWebsite.renderTodos(TodoContainer);
     })
 
-    // Select Project Listener
-    allProjectElements.forEach(function(item) {
-      item.addEventListener('click', function() {
-        console.log('test')
-        renderWebsite.resetActiveProjects(allProjectElements);
-        item.classList.toggle('activated');
-      })
-    })
+
 
   }
   

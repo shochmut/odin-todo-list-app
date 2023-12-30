@@ -97,6 +97,11 @@ html, body {
     background-color: var(--light-gray);
 }
 
+.invalid {
+    background-color: #fdd;
+    border-color: #900;
+}
+
 .project-container {
     display: flex;
     flex-direction: column;
@@ -303,6 +308,64 @@ html, body {
 } 
 
 #create-todo-form-header {
+    display:flex;
+    justify-content: space-between;
+    background-color: var(--blue);
+    width: 98%;
+    margin: 0;
+    padding-left: 20px;
+    overflow: hidden;
+}
+
+
+
+
+
+#edit-todo-form {
+    position: absolute;
+    visibility: hidden;
+    left: 10%;
+    top: 25%;
+    height: 50%;
+    max-height: 80rem;
+    width: 80%;
+    max-width: 80rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2rem 4rem rgba(0,0,0,0.6);
+    background-color: white;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "header header"
+        "todo-title todo-title"
+        "todo-description todo-description"
+        "todo-description todo-description"
+        "todo-duedate todo-duedate"
+        "todo-submit todo-submit";
+}
+#edit-todo-form-header {
+    grid-area: header;
+}
+.edit-todo-title {
+    grid-area: todo-title;
+}
+#edit-todo-submit {
+    grid-area: todo-submit;
+}
+.edit-todo-duedate-label {
+    grid-area: todo-duedate;
+}
+.edit-todo-description {
+    grid-area: todo-description;
+}
+#edit-todo-form.activated {
+    visibility: visible;
+    /* display: inline-block;    */
+} 
+
+#edit-todo-form-header {
     display:flex;
     justify-content: space-between;
     background-color: var(--blue);

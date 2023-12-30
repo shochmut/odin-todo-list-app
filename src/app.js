@@ -5,6 +5,8 @@ import windowCloseIcon from './Assets/window-close.svg'
 import squareEditIcon from './Assets/square-edit-outline.svg'
 import trashCanIcon from './Assets/trash-can.svg'
 import plusBoxIcon from './Assets/plus-box.svg'
+import { format, constructFrom } from "date-fns"
+import "lodash"
 
 export const todoLogic = (function() {
     //module containing all application logic
@@ -21,7 +23,8 @@ export const todoLogic = (function() {
             done: done,
             notes: notes,
             checklist: checklist,
-            project: project, 
+            project: project,
+            id: _.uniqueId(), 
         }
         todos.push(newTodo);
         return {newTodo};
@@ -44,11 +47,33 @@ export const todoLogic = (function() {
         return currentProject;
     }
 
+    function getCurrentTodos(activeProject) {
+        const currentTodos = todos.filter((todo) => {return todo.project == activeProject})
+        return currentTodos;
+    }
+
+    function editTodo(todoSelector, newTitle, newDescription, newDueDate) {
+        let obj = todos.find((o, i) => {
+            if (o.id === todoSelector) {
+                todos[i].title = newTitle;
+                todos[i].description =  newDescription;
+                todos[i].dueDate = newDueDate;
+            }
+        })
+    }
+
+    function checkIfProjectExists(projectTitle) {
+        if (projects.some(project => project.title === projectTitle)) {
+            return true
+        } else {
+            return false
+        }
+    }
 
 
 
 
-    return{todos, projects, createTodo, createProject, setProject, getCurrentProject};
+    return{todos, projects, createTodo, createProject, setProject, getCurrentProject, getCurrentTodos, checkIfProjectExists, editTodo};
 })();
 
 todoLogic.createProject('Todo')
@@ -58,6 +83,7 @@ todoLogic.createTodo('Example Todo', 'This is my first todo item', '12/1/2023', 
 
 export const renderWebsite = (function() {
     //module containing all user interface generation logic
+    let selectedTodo = '';
 
     function createHeader() {
         const header = document.createElement('div');
@@ -126,7 +152,7 @@ export const renderWebsite = (function() {
             renderWebsite.resetActiveProjects(document.querySelectorAll('.project-title'));
             title.classList.toggle('activated');
             todoLogic.setProject(title.innerHTML);
-            console.log(todoLogic.getCurrentProject());
+            renderTodos(document.querySelector('.todo-container'));
         })
 
         return title
@@ -154,7 +180,8 @@ export const renderWebsite = (function() {
 
     function renderTodos(TodoContainer) {
         TodoContainer.replaceChildren();
-        todoLogic.todos.forEach(function (item) {TodoContainer.appendChild(createTodoDisplay(item))});
+        const currentTodos = todoLogic.getCurrentTodos(todoLogic.getCurrentProject());
+        currentTodos.forEach(function (item) {TodoContainer.appendChild(createTodoDisplay(item))});
     }
 
     function createTodoDisplay(item) {
@@ -191,6 +218,17 @@ export const renderWebsite = (function() {
         editButton.classList.add('todo-edit');
         editButton.type = 'image';
         editButton.src = squareEditIcon;
+        editButton.addEventListener('click', function() {
+            selectedTodo = item.id;
+            document.querySelector('.edit-todo-title').defaultValue = item.title;
+            document.querySelector('.edit-todo-description').defaultValue = item.description;
+            if (item.dueDate) {
+                document.querySelector('.edit-todo-duedate').value = format(new Date(item.dueDate), 'yyyy-MM-dd');
+            } else {
+                document.querySelector('.edit-todo-duedate').value = '';
+            }
+            document.getElementById('edit-todo-form').classList.toggle('activated');
+        })
 
         const deleteButton = document.createElement('input');
         deleteButton.classList.add('todo-delete');
@@ -295,6 +333,66 @@ export const renderWebsite = (function() {
         return form
     }
 
+    function createEditForm() {
+        const form = document.createElement('form');
+        form.id = 'edit-todo-form';
+        const windowCloseButton = document.createElement('button');
+        windowCloseButton.classList.add('close-window-button')
+        const windowClose = new Image();
+        windowClose.src = windowCloseIcon;
+        windowClose.classList.add('close-window-icon');
+        windowCloseButton.appendChild(windowClose)
+        form.appendChild(windowCloseButton);
+        const titleInput = document.createElement('input');
+        titleInput.classList.add('edit-todo-title');
+        titleInput.type = 'text';
+        titleInput.name = 'title'
+        titleInput.contentEditable = true;
+        form.appendChild(titleInput);
+        const submitButton = document.createElement('input');
+        submitButton.id = 'edit-todo-submit';
+        submitButton.type = 'submit';
+        submitButton.value = "Accept Changes";
+        form.appendChild(submitButton);
+
+        const description = document.createElement('input');
+        description.classList.add('edit-todo-description');
+        description.type = 'text';
+        description.name = 'description';
+        description.contentEditable = true;
+        form.appendChild(description);
+
+        const dueDateContainer = document.createElement('label');
+        dueDateContainer.classList.add('edit-todo-duedate-label');
+        dueDateContainer.innerHTML = 'Due Date: ';
+        const dueDate = document.createElement('input');
+        dueDate.classList.add('edit-todo-duedate');
+        dueDate.type = 'date';
+        dueDate.name = 'duedate';
+        dueDateContainer.appendChild(dueDate);
+        form.appendChild(dueDateContainer);
+
+        // Edit Todo Form Submission Listener
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = e.target.elements;
+            const newTitle = data.title.value;
+            const newDescription = data.description.value;
+            const newDueDate = data.duedate.value;
+
+            console.log(newDueDate)
+            
+            todoLogic.editTodo(selectedTodo, newTitle, newDescription, newDueDate)
+            form.classList.toggle('activated');
+            form.reset();
+            renderTodos(document.querySelector('.todo-container'))
+
+
+        })
+
+        return form
+    }
+
     function resetActiveProjects(allProjectElements) {
         // Function to reset all sidebar projects to not be highlighted
         allProjectElements.forEach(function(item) {
@@ -302,7 +400,7 @@ export const renderWebsite = (function() {
         })
     }
 
-    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, renderTodos, createAddTodoForm, resetActiveProjects}
+    return {createHeader, createSidebar, createWorkspace, createAddProjectForm, renderProjects, renderTodos, createAddTodoForm, resetActiveProjects, createEditForm}
     
 })();
 
